@@ -122,7 +122,8 @@ handle(Message, Host, {throttled, Host, _ReqCount}) ->
 %% by filling out count-related header fields.
 handle(Message, Host, _) ->
   erldns_events:notify({start_handle, [{host, Host}, {message, Message}]}),
-  Response = folsom_metrics:histogram_timed_update(request_handled_histogram, ?MODULE, do_handle, [Message, Host]),
+  %%Response = folsom_metrics:histogram_timed_update(request_handled_histogram, ?MODULE, do_handle, [Message, Host]),
+  Response = do_handle(Message, Host),
   erldns_events:notify({end_handle, [{host, Host}, {message, Message}, {response, Response}]}),
   Response.
 
